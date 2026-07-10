@@ -1,0 +1,65 @@
+# GoReleaser config for cshell.
+# Docs: https://goreleaser.com
+version: 2
+
+project_name: cshell
+
+builds:
+  - id: cshell
+    main: ./app
+    binary: cshell
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - id: cshell
+    formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    files:
+      - README.md
+      - LICENSE
+
+# .deb packages (consumed by the apt repo build step in CI).
+nfpms:
+  - id: cshell
+    package_name: cshell
+    formats:
+      - deb
+    maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+    description: |
+      A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+      picker (Ctrl+G) over previous command output.
+    homepage: https://github.com/iam-abdul/cshell
+    license: MIT
+    section: shells
+    bindir: /usr/bin
+    contents:
+      - src: README.md
+        dst: /usr/share/doc/cshell/README.md
+      - src: LICENSE
+        dst: /usr/share/doc/cshell/copyright
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+release:
+  github:
+    owner: iam-abdul
+    name: cshell

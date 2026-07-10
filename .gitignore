@@ -1,0 +1,6 @@
+# compiled binary
+/cshell
+/app/app
+
+# dist artifacts (goreleaser / packaging)
+/dist/

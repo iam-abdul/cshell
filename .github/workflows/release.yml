@@ -1,0 +1,71 @@
+name: release
+
+# Publishes on every version tag, e.g.  git tag v0.1.0 && git push --tags
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write   # create GitHub Releases and push the gh-pages branch
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      # apt-ftparchive lives in the apt-utils package
+      - name: Install packaging tools
+        run: sudo apt-get update && sudo apt-get install -y apt-utils
+
+      # imports the private signing key; exposes its id as steps.gpg.outputs.fingerprint
+      - name: Import GPG signing key
+        id: gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      # builds binaries, archives, checksums, .deb files and cuts the GitHub Release
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # pull the currently-published repo (if any) so older versions are preserved
+      - name: Fetch existing apt repo
+        run: |
+          rm -rf existing
+          if git fetch origin gh-pages:gh-pages 2>/dev/null; then
+            git worktree add existing gh-pages
+          fi
+
+      - name: Build signed apt repo
+        run: |
+          scripts/build-apt-repo.sh dist public \
+            "${{ steps.gpg.outputs.fingerprint }}" \
+            "$( [ -d existing ] && echo existing || echo )"
+
+      - name: Publish apt repo to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          # we regenerate the full repo (merging old versions in) each run,
+          # so a clean replace is correct
+          force_orphan: true
