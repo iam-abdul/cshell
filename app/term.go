@@ -516,7 +516,7 @@ func (ts *TermSession) renderPicker(pk *Picker) {
 func (ts *TermSession) promptString(varName, fallback string) string {
 	v, ok := ts.shell.getVar(varName)
 	if !ok {
-		return fallback
+		v = fallback
 	}
 	return ts.shell.expandPrompt(v)
 }
@@ -548,7 +548,7 @@ func runInteractive(shell *Cshell) {
 		// re-assert at every prompt so the title returns to "cshell" after a
 		// full-screen program (man, vim, ...) set its own
 		setTerminalTitle(os.Stdout, "cshell")
-		line, err := ts.ReadLine(ts.promptString("PS1", "$ "))
+		line, err := ts.ReadLine(ts.promptString("PS1", `\e[32m\u@\h \W #\e[0m `))
 		if errors.Is(err, errAborted) {
 			shell.LastStatus = 130
 			continue

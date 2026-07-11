@@ -61,7 +61,10 @@ func startShellInHome(t *testing.T, home string) *ptySession {
 	t.Helper()
 
 	cmd := exec.Command(shellBinary)
-	cmd.Env = append(os.Environ(), "HOME="+home)
+	// Pin a deterministic default prompt; the shipped default is
+	// environment-dependent (\u@\h \W % ). Tests that need a custom PS1
+	// still override this via .cshrc or an interactive assignment.
+	cmd.Env = append(os.Environ(), "HOME="+home, "PS1=$ ")
 
 	ptmx, err := pty.Start(cmd)
 	if err != nil {

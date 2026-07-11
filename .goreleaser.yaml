@@ -47,6 +47,10 @@ nfpms:
         dst: /usr/share/doc/cshell/README.md
       - src: LICENSE
         dst: /usr/share/doc/cshell/copyright
+    # register/unregister cshell in /etc/shells on install/remove
+    scripts:
+      postinstall: scripts/postinstall.sh
+      preremove: scripts/preremove.sh
 
 checksum:
   name_template: "checksums.txt"
