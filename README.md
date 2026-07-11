@@ -1,6 +1,11 @@
 # cshell
 
 
+
+https://github.com/user-attachments/assets/e069955a-6aa9-4d15-a6ea-cec216b4bdb0
+
+
+
 A POSIX-style shell written from scratch in Go, built around one idea: most
 of the time, the argument you are about to type is already printed on your
 screen. cshell captures everything commands print and lets you grab any of
