@@ -1,0 +1,90 @@
+Package: cshell
+Architecture: amd64
+Version: 0.0.1
+Priority: optional
+Section: shells
+Maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+Installed-Size: 2052
+Filename: pool/main/c/cshell/cshell_0.0.1_linux_amd64.deb
+Size: 945048
+MD5sum: 24276daaf9fc25db1956e5245fe28e83
+SHA1: 29c8e8a209ee1873783e34e57ca5069089a5b928
+SHA256: ec17a2fa5c277a9b6ffb8659aec21744d2856a8e48b9e28d4e0225de90d860b6
+SHA512: 60042673479039167d597d495054f10e976a68f0cb30509df236a12cf83d396662ac4ca4024d5c924fcb4bcca33ec0c1a8b032257a4344f62745c715daea04d2
+Homepage: https://github.com/iam-abdul/cshell
+Description: A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+ picker (Ctrl+G) over previous command output.
+Architecture-Variant: amd64v1
+
+Package: cshell
+Architecture: amd64
+Version: 0.0.2
+Priority: optional
+Section: shells
+Maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+Installed-Size: 2052
+Filename: pool/main/c/cshell/cshell_0.0.2_linux_amd64.deb
+Size: 945136
+MD5sum: c91a40e4e7884cfa7cf8fcb903da6822
+SHA1: aeb14199e6b078f2d2472490d7ae3a897a627882
+SHA256: fb710a371c3ef5ff96375bb4e6ea1d5d7312d4bd96b844ec9a315b51718777fe
+SHA512: 429baadaf2c24e025b0571432fec7d7c6339a76deacca5e62790f9c17d7ccf4ea229542c788bc6698a690b578c70490a7568c746d0a704738680ac55ddcf4430
+Homepage: https://github.com/iam-abdul/cshell
+Description: A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+ picker (Ctrl+G) over previous command output.
+Architecture-Variant: amd64v1
+
+Package: cshell
+Architecture: amd64
+Version: 0.0.3
+Priority: optional
+Section: shells
+Maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+Installed-Size: 2052
+Filename: pool/main/c/cshell/cshell_0.0.3_linux_amd64.deb
+Size: 945424
+MD5sum: 6a43fd76c46ab651554ff48af3bdf651
+SHA1: 7ff134c79c1035dd3980cc554b2e56af40d783a5
+SHA256: 1d336c15050ca8c4210439c40295bca0bc73ca2876860e4d18e680638d9e95ab
+SHA512: 401e7e5a42bd566d1f7309bfea4565e923cc4ca4aba5f76f0f75f4b81883234f9b711afa281838c09ea296d7a188bf3127bd2867e41303c01e5d9479c0be3d46
+Homepage: https://github.com/iam-abdul/cshell
+Description: A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+ picker (Ctrl+G) over previous command output.
+Architecture-Variant: amd64v1
+
+Package: cshell
+Architecture: amd64
+Version: 0.0.4
+Priority: optional
+Section: shells
+Maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+Installed-Size: 2052
+Filename: pool/main/c/cshell/cshell_0.0.4_linux_amd64.deb
+Size: 945818
+MD5sum: 3bc8f6c955a43b5c629eb66b927c3f97
+SHA1: cf728ee3325d4ae5fdcf6e92407c54078c6ca598
+SHA256: 785196a38220f9ace3d7eea064a06756d50e7408e9cce8b5568ca3a35d6d5e95
+SHA512: 74b94f350f92f96f97f5238448905c7824c450d19f05a61523145e57bc8272dd36b0a94b6cca031dffd8dbdab05e8d29d18e2ce7a2f0cb854b6aeb657f465ef2
+Homepage: https://github.com/iam-abdul/cshell
+Description: A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+ picker (Ctrl+G) over previous command output.
+Architecture-Variant: amd64v1
+
+Package: cshell
+Architecture: amd64
+Version: 0.0.5
+Priority: optional
+Section: shells
+Maintainer: Abdul <mohammadabdulrehman739@gmail.com>
+Installed-Size: 2052
+Filename: pool/main/c/cshell/cshell_0.0.5_linux_amd64.deb
+Size: 945878
+MD5sum: eda9e31c492d09720fda4a65209888cf
+SHA1: b4301e12b2b2e9422341b88401764afb16fe1a6a
+SHA256: 9a7c937ab5f0fa996fd2de557b884a879eea4d0e2c0d4410374b0a674583696d
+SHA512: f4ee263cfcd18a1f9c0b49001c9242bf8e0d89e6923ccaf786c0143fdf766900f33c841069002b071a6ab4ac7bdf2bc33afca2960356adae3eeaa2574cfd11c8
+Homepage: https://github.com/iam-abdul/cshell
+Description: A POSIX-style shell written from scratch in Go with a fuzzy "grab"
+ picker (Ctrl+G) over previous command output.
+Architecture-Variant: amd64v1
+
