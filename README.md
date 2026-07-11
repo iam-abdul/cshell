@@ -36,14 +36,16 @@ output to your screen and into a scrollback buffer that feeds the picker.
 
 ## Install
 
-### Debian / Ubuntu — one-liner
+### One-liner (Debian / Ubuntu & macOS)
 
 ```sh
 curl -fsSL https://iam-abdul.github.io/cshell/install.sh | sudo sh
 ```
 
-This sets up the signed apt repository and installs cshell. Future updates
-then come through `sudo apt upgrade`.
+On Debian/Ubuntu this sets up the signed apt repository and installs cshell,
+so future updates come through `sudo apt upgrade`. On macOS it installs the
+prebuilt binary for your architecture into `/usr/local/bin` (re-run the
+command to update).
 
 ### Debian / Ubuntu — manual apt setup
 
