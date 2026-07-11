@@ -1,6 +1,5 @@
 # cshell
 
-https://github.com/user-attachments/assets/4165778e-a7d9-4fdb-a16e-82df460623e6
 
 A POSIX-style shell written from scratch in Go, built around one idea: most
 of the time, the argument you are about to type is already printed on your
