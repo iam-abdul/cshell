@@ -3,6 +3,7 @@
 # Build a GPG-signed apt repository from the .deb files GoReleaser produced.
 #
 # Layout produced (served at https://<owner>.github.io/cshell):
+#   install.sh                                        one-line installer script
 #   key.gpg                                          armored public signing key
 #   pool/main/c/cshell/*.deb                          the packages
 #   dists/stable/Release{,.gpg} , InRelease           signed indices
@@ -77,5 +78,8 @@ gpg --armor --export "$KEY_ID" > key.gpg
 
 rm -f apt-ftparchive.conf
 popd >/dev/null
+
+# one-line installer, served at $OUT_DIR/install.sh
+cp "$(dirname "$0")/install.sh" "$OUT_DIR/install.sh"
 
 echo "apt repo built in $OUT_DIR"

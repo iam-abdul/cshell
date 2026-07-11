@@ -36,7 +36,18 @@ output to your screen and into a scrollback buffer that feeds the picker.
 
 ## Install
 
-### Debian / Ubuntu (apt)
+### Debian / Ubuntu — one-liner
+
+```sh
+curl -fsSL https://iam-abdul.github.io/cshell/install.sh | sudo sh
+```
+
+This sets up the signed apt repository and installs cshell. Future updates
+then come through `sudo apt upgrade`.
+
+### Debian / Ubuntu — manual apt setup
+
+If you would rather add the repository yourself instead of piping a script:
 
 ```sh
 curl -fsSL https://iam-abdul.github.io/cshell/key.gpg \
@@ -45,8 +56,6 @@ echo 'deb [signed-by=/usr/share/keyrings/cshell.gpg] https://iam-abdul.github.io
   | sudo tee /etc/apt/sources.list.d/cshell.list
 sudo apt update && sudo apt install cshell
 ```
-
-Future updates then come through `sudo apt upgrade`.
 
 ### Prebuilt binary (Linux / macOS)
 
