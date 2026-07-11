@@ -214,13 +214,47 @@ func (ts *TermSession) render() {
 		end = len(buf)
 	}
 
-	fmt.Fprintf(ts.out, "\r%s%s\x1b[K", ts.prompt, displayable(buf[start:end]))
+	// the typed input is drawn blue — the command (first word) a shade darker
+	// than its arguments. Colors are opened and closed here so they never leak
+	// into command output, the grab picker, or the \x1b[K clear. The split is
+	// computed on the full buffer so it stays correct while scrolled sideways.
+	split := firstWordEnd(buf) - start
+	if split < 0 {
+		split = 0
+	}
+	if split > end-start {
+		split = end - start
+	}
+	vis := buf[start:end]
+	fmt.Fprintf(ts.out, "\r%s%s%s%s%s\x1b[0m\x1b[K",
+		ts.prompt,
+		inputCmdColor, displayable(vis[:split]),
+		inputArgColor, displayable(vis[split:]))
 	col := ts.promptW + (cur - start)
 	ts.out.WriteString("\r")
 	if col > 0 {
 		fmt.Fprintf(ts.out, "\x1b[%dC", col)
 	}
 	ts.out.Flush()
+}
+
+// input coloring: the command word is a darker muted blue than its arguments.
+const (
+	inputCmdColor = "\x1b[38;5;25m" // #005faf
+	inputArgColor = "\x1b[38;5;74m" // #5fafd7
+)
+
+// firstWordEnd returns the index just past the first word (the command name),
+// skipping any leading spaces. Everything from here on is arguments.
+func firstWordEnd(buf []rune) int {
+	i := 0
+	for i < len(buf) && buf[i] == ' ' {
+		i++
+	}
+	for i < len(buf) && buf[i] != ' ' {
+		i++
+	}
+	return i
 }
 
 // displayable makes control characters visible; a recalled multi-line
@@ -548,7 +582,8 @@ func runInteractive(shell *Cshell) {
 		// re-assert at every prompt so the title returns to "cshell" after a
 		// full-screen program (man, vim, ...) set its own
 		setTerminalTitle(os.Stdout, "cshell")
-		line, err := ts.ReadLine(ts.promptString("PS1", `\e[32m\u@\h \W #\e[0m `))
+		// muted 256-color shades: green user, gold @host, red cwd
+		line, err := ts.ReadLine(ts.promptString("PS1", `\e[38;5;108m\u\e[38;5;179m@\h \e[38;5;167m\W\e[0m # `))
 		if errors.Is(err, errAborted) {
 			shell.LastStatus = 130
 			continue

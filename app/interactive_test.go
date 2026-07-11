@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -103,11 +104,16 @@ func (s *ptySession) send(text string) {
 	}
 }
 
-// normalized is the output so far with carriage returns stripped: the pty
-// stack inserts \r unpredictably (ONLCR at two layers), so tests match on
-// \n-only text.
+// ansiSGR matches color/attribute escape sequences (ESC [ ... m).
+var ansiSGR = regexp.MustCompile("\x1b\\[[0-9;]*m")
+
+// normalized is the output so far with carriage returns and SGR color codes
+// stripped: the pty stack inserts \r unpredictably (ONLCR at two layers), and
+// the prompt and typed input are colored, so tests match on plain \n-only
+// text. Escape-sequence expansion itself is covered by TestExpandPrompt.
 func (s *ptySession) normalized() string {
-	return strings.ReplaceAll(s.buf.String(), "\r", "")
+	out := strings.ReplaceAll(s.buf.String(), "\r", "")
+	return ansiSGR.ReplaceAllString(out, "")
 }
 
 // expect waits until the not-yet-consumed output contains sub, then consumes
@@ -229,7 +235,7 @@ func TestInteractive_GrabPicker(t *testing.T) {
 	s.send("\x07") // Ctrl+G
 	s.expect("grab> ")
 	s.send("abc123")
-	s.expect("\x1b[7m> grab-target-abc123")
+	s.expect("> grab-target-abc123") // the highlighted picker row
 
 	// accept: the grabbed token lands in the command line
 	s.send("\r")
@@ -356,9 +362,10 @@ PS2=more%
 	s := startShellInHome(t, home)
 
 	// rc commands ran before the first prompt, which uses the custom PS1
-	// with its \e escapes expanded to real ANSI colors
+	// (its \e color escapes are stripped by normalized(); expansion itself is
+	// covered by TestExpandPrompt)
 	s.expect("rc-file-loaded")
-	s.expect("\x1b[32mcustom\x1b[0m%")
+	s.expect("custom%")
 
 	// exported rc variables reach child processes
 	s.send("printenv RCVAR\r")
